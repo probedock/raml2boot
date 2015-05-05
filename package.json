@@ -13,6 +13,10 @@
     "type": "git",
     "url": "git@github.com:probe-dock/raml2boot.git"
   },
+  "keywords": [
+    "raml",
+    "bootstrap"
+  ],
   "dependencies": {
     "autoprefixer-core": "^5.1.11",
     "bluebird": "^2.9.25",
