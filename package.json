@@ -5,6 +5,10 @@
   "main": "./lib/index.js",
   "author": "Simon Oulevay <npm@alphahydrae.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/probe-dock/raml2boot"
+  },
   "dependencies": {
     "autoprefixer-core": "^5.1.11",
     "bluebird": "^2.9.25",
