@@ -1,0 +1,346 @@
+.affix
+  padding-top 10px
+  top 0
+
+/*.affix-top*/
+  /*top 90px*/
+
+.markdown *:last-child
+  margin-bottom 0
+
+.api-container
+  flex-direction row
+  display flex
+  padding 20px
+
+  .api-content
+    overflow scroll
+    margin 20px
+    flex 6
+
+  .api-menu
+    margin 20px
+    flex 1
+
+    .api-menu-content
+      flex-direction column
+      display flex
+
+      a
+        margin-bottom 6px
+        font-weight bold
+        font-size 1.3em
+        flex 1
+
+        &.level-1
+          margin-bottom 3px
+          margin-left 20px
+
+pre
+  overflow scroll
+
+.parent
+  color #999
+
+.child
+  color #000
+
+.toggle-all
+  i
+    cursor pointer
+
+.badge-required
+  background-color #b93634
+
+.badge-repeat
+  background-color #4a70e2
+
+res(i, max)
+  if i < max
+    & > .resource
+      background lighten(#EEE, i * 35%)
+      border-left-color lighten(#EEE, i * 35%)
+
+      .resource-title
+        background-color lighten(#EEE, i * 35%)
+
+        .resource-title-description
+          margin-left i * -10px
+
+      res(i + 1, max)
+
+
+.method
+  border-left 10px solid darken(#EEE, 20%)
+  flex-direction column
+  background #EEE
+  display flex
+
+  p
+    margin 0
+
+  table
+    margin-bottom 0
+
+    td
+      background-color transparent !important
+
+      .constraints
+        display flex
+        flex-direction column
+
+        .constraint
+          margin 3px
+          flex 1
+
+    pre
+      background-color transparent
+      line-height 24px
+      margin-bottom 0
+      border none
+      padding 0
+
+    .center
+      text-align center
+
+  .method-title
+    align-items baseline
+    flex-direction row
+    display flex
+    margin 0
+    flex 1
+
+    span.verb
+      text-transform uppercase
+      font-weight bold
+      padding 10px 0
+      font-size 1em
+      color #f3f3f6
+      display flex
+
+    span.url
+      display flex
+      color black
+
+  .description
+    padding 15px 0
+    margin 0
+
+  .method-body
+    .method-section
+      flex-direction column
+      display flex
+
+      h3
+        font-size 1.1em
+        cursor pointer
+        padding 10px
+        margin 0
+
+        &.no-action
+          cursor inherit
+
+      pre
+        margin-bottom 0
+        border none
+
+  ul.nav-tabs
+    border-bottom-width 3px
+
+    li
+      margin-bottom 0
+
+      a
+        border none !important
+        border-radius 0
+        outline 0
+
+  .tab-content
+    padding 0
+
+.resource
+  border-top 1px solid darken(#EEE, 20%)
+  flex-direction column
+  padding-left 10px
+  background #EEE
+  display flex
+
+  &:last-child.resource-level-1
+    border-bottom 1px solid darken(#EEE, 20%)
+
+  res(1, 5)
+
+  .resource-title
+    background-color #EEE
+    padding 10px 0
+    display flex
+    margin 0
+    align-items center
+
+    a
+      text-decoration none !important
+      cursor pointer
+
+    .resource-title-uri, .resource-title-badges
+      flex 1
+
+    .resource-title-description
+      font-weight normal
+      font-size .8em
+      flex 3
+
+      .description-link
+        padding-left 5px
+
+    .badge
+      text-transform uppercase
+      line-height normal
+      font-weight bold
+      margin-right 5px
+      border-radius 0
+      min-width 70px
+      color #f3f3f6
+      padding 5px
+      float right
+
+.flex-table
+  flex-direction column
+  display flex
+
+  .left
+    text-align left
+
+  .center
+    text-align center
+
+  .right
+    text-align right
+
+  .no-padding
+    padding 0 !important
+
+  for i in 2..10
+    .s{i}
+      flex i !important
+
+  .flex-table-headers
+    display flex
+
+    .flex-table-header
+      border-bottom 4px solid black
+      border-top 3px solid black
+      border-left-style solid
+      border-left-width 1px
+      font-weight bold
+      font-size 1.2em
+      padding 10px
+      flex 1
+
+  .no-left-border
+    .flex-table-header:first-of-type
+      border-left none
+
+  .flex-table-row
+    display flex
+
+    .flex-table-cell
+      border-bottom 1px solid black
+      border-left 1px solid black
+      border-top 1px solid black
+      justify-content center
+      flex-direction column
+      margin-top -1px
+      display flex
+      padding 10px
+      flex 1
+
+      .badge
+        align-self flex-start
+
+      ul
+        margin 0
+
+      h2
+        font-weight bold
+        font-size 1.2em
+        padding 0
+        margin 0
+
+    &:last-of-type
+      .flex-table-cell
+        border-bottom none
+
+  .no-left-border
+    .flex-table-cell:first-of-type
+      border-left none
+
+  for i in 0..10
+    .flex-table.level-{i}
+      if i > 0
+        border-left 1px solid black
+        padding-left 10px
+
+      else
+        border-bottom 1px solid black
+
+      .flex-table-cell
+        border-bottom none !important
+
+      .property
+        margin-right i * -11px !important
+        margin-left 0 !important
+
+  for i in 0..10
+    .flex-table-row.level-{i}
+
+      .property
+        margin-right i * -10px
+        margin-left i * 10px
+
+methods = {
+  get: #63a8e2,
+  post: #6cbd7d,
+  patch: #bd9368,
+  put: #22bac4,
+  delete: #d26460
+}
+
+m-section(i, max, v)
+  if i < max
+    .method-section
+      h3
+        margin-left i * 10px
+        border-bottom 1px solid v
+        background lighten(v, 35%)
+
+      .method-section-content
+        margin-left i * 10px
+
+      m-section(i + 1, max, lighten(v, 35%))
+
+for k, v in methods
+  .badge-{k}
+    background-color v
+
+  .method-{k}
+    border-left-color v
+    background lighten(v, 85%)
+
+    .method-title
+      background v
+
+    .method-body
+      m-section(0, 4, v)
+
+      .description
+        border-bottom 3px solid v
+        padding-left 10px
+
+    ul.nav-tabs
+      border-bottom 1px solid v
+
+    .flex-table, .flex-table-header, .flex-table-cell
+      border-color v !important
+
+    .flex-table-header
+      background-color lighten(v, 50%)

@@ -1,0 +1,13 @@
+extends layout
+
+append menu
+  a(href='/') Overview
+  a(href='/api/reference') Resources
+  if resources
+    each resource in resources
+      a.level-1(href='/api/reference/##{resource.uniqueId}')
+        span=resource.displayName ? resource.displayName : resource.relativeUri
+        if resource.isPrivate
+          i.glyphicon.glyphicon-lock
+  else
+    label Could not find resources list.
