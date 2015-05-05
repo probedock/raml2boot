@@ -1,2 +1,4 @@
+/.grunt
 /examples/*.html
 /node_modules
+/tmp

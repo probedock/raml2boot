@@ -1,9 +1,11 @@
 # RAML to Bootstrap
 
-> Generate a Bootstrap page for your API documentation from RAML.
+> Generate a Bootstrap page for your API documentation from [RAML](http://raml.org)
 
 [![NPM version](https://badge.fury.io/js/raml2boot.svg)](http://badge.fury.io/js/raml2boot)
 [![License](https://img.shields.io/npm/l/raml2boot.svg)](http://opensource.org/licenses/MIT)
+
+[**Great, but what does it look like?**](http://probe-dock.io/raml2boot/)
 
 ## Installation
 
@@ -41,5 +43,5 @@ Please add a changelog entry with your name for new features and bug fixes.
 
 ## License
 
-RAML to Bootstrap is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+**raml2boot** is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 See [LICENSE.txt](LICENSE.txt) for the full text.
