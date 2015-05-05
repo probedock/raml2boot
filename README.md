@@ -24,6 +24,8 @@ raml2boot -o api.html api.raml
 cat api.html
 ```
 
+If you're using [Grunt](http://gruntjs.com), check out the [grunt-raml2boot task](https://github.com/probe-dock/grunt-raml2boot).
+
 
 
 
