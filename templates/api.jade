@@ -1,13 +1,35 @@
-extends layout
+include raml/resource.jade
+include raml/json-schema.jade
 
-append menu
-  a(href='/') Overview
-  a(href='/api/reference') Resources
-  if resources
-    each resource in resources
-      a.level-1(href='/api/reference/##{resource.uniqueId}')
-        span=resource.displayName ? resource.displayName : resource.relativeUri
-        if resource.isPrivate
-          i.glyphicon.glyphicon-lock
-  else
-    label Could not find resources list.
+extends raml2boot-layout
+
+block body
+  a#top
+
+  .page-header
+    h1= title
+
+  .page-header
+    small
+    b Endpoint: &nbsp;&nbsp;
+    = baseUri
+    a.pull-right.toggle-all(data-ref='.collapse-method')
+      i.glyphicon.glyphicon-plus
+      i.glyphicon.glyphicon-minus(style='display: none;')
+
+  a#resources
+  each mainResource in resources
+    +resource(mainResource, 1)
+
+block menu
+  nav#raml2boot-menu
+    ul
+      li
+        a(href='#top') Overview
+      li
+        a(href='#resources') Resources
+        ul
+          each resource in resources
+            li
+              a(href='##{resource.uniqueId}')
+                span=resource.displayName ? resource.displayName : resource.relativeUri

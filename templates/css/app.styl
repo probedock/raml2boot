@@ -38,17 +38,6 @@ div > p > img
   font-size 12px
   margin-left 6px
 
-
-@media(max-width: 768px)
-  .row .private
-    margin-left 0
-    padding-left 15px
-    padding-top 40px
-    .private--vertical-bar
-      width 100%
-      height 30px
-
-
 /* expanded rows in the resource panels */
 .list-group
   span
@@ -56,6 +45,21 @@ div > p > img
       margin-bottom 0px
       margin-top 5px
 
+#raml2boot-menu
+  a
+    text-decoration none
+    &:hover
+      text-decoration underline
+  ul
+    list-style-type none
+    margin 0
+    padding 0
+    > li
+      margin-top 1em
+    ul
+      margin-left 1em
+      > li
+        margin-top 0.4em
 
 /* footer of the resource panels */
 .panel-footer
@@ -66,7 +70,6 @@ div > p > img
     text-align right
     color #ADA9A9
 
-/* styling for the private blog posts */
 .panel-warning
   .panel-footer
     background-color #fcf8e3
@@ -74,27 +77,6 @@ div > p > img
 span.glyphicon.glyphicon-lock
   color #555
   margin-right: 10px;
-    
-.private
-  border solid 1px #999
-  border-radius 3px
-  margin 10px 0px 10px -45px
-  padding 10px 10px 10px 45px
-  position relative
-  .glyphicon
-    margin-left 7px
-    margin-top 7px
-
-.private--vertical-bar
-  background-color #e7e7e7
-  border-top-left-radius 3px
-  border-bottom-left-radius 3px
-  position absolute
-  left 0
-  top 0
-  bottom 0
-  width 30px
-
 
 .footer
   position absolute

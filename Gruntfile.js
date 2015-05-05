@@ -1,3 +1,5 @@
+var raml2boot = require('./lib');
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -12,11 +14,28 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [ 'Gruntfile.js', 'lib/**/*.js' ]
+    },
+
+    watch: {
+      examples: {
+        files: [ 'examples/**/*.raml', 'examples/**/*.jade', 'lib/**/*.js', 'templates/**/*' ],
+        tasks: [ 'examples' ],
+        options: {
+          atBegin: true,
+          livereload: true
+        }
+      }
     }
+  });
+
+  grunt.registerTask('examples', 'Convert examples/api.raml to examples/api.html', function() {
+    var done = this.async();
+    raml2boot({ source: 'examples/api.raml', output: 'examples/api.html', livereload: true }).then(done);
   });
 
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['jshint']);
 };

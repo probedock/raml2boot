@@ -9,8 +9,8 @@ html
 
     link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css")
-    style= css('app')
-    style= css('raml')
+    style!= css('app')
+    style!= css('raml')
 
   body
 
@@ -30,14 +30,10 @@ html
               a(href="/") Home
     .api-container
       .api-content
-        a(id="top")
-        h1= title
-        hr
         block body
-          div!= contents
 
       .api-menu
-        .api-menu-content.affix-top(data-spy='affix', data-offset-top='105')
+        .api-menu-content.affix-top
           block menu
 
     .footer
@@ -51,3 +47,5 @@ html
     script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
     script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.5/jquery.smooth-scroll.min.js")
     script(type="text/javascript")= js('app')
+    if livereload
+      script(type="text/javascript", src="#{livereload === true ? 'http://localhost:35729/livereload.js' : livereload}")

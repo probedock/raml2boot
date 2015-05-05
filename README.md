@@ -14,10 +14,11 @@ npm install -g raml2boot
 ## Usage
 
 ```bash
+# print resulting HTML
 raml2boot api.raml
-cat api.html
 
-raml2boot -o custom-output-file.html api.raml
+# save to file
+raml2boot -o output-file.html api.raml
 cat custom-output-file.html
 ```
 
