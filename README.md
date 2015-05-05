@@ -20,8 +20,8 @@ npm install -g raml2boot
 raml2boot api.raml
 
 # save to file
-raml2boot -o output-file.html api.raml
-cat custom-output-file.html
+raml2boot -o api.html api.raml
+cat api.html
 ```
 
 
