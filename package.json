@@ -1,20 +1,24 @@
 {
   "name": "raml2boot",
   "version": "0.1.0",
-  "description": "",
+  "description": "RAML to Bootstrap documentation generator.",
   "main": "./lib/index.js",
   "author": "Simon Oulevay <npm@alphahydrae.com>",
   "license": "MIT",
+  "homepage": "https://github.com/probe-dock/raml2boot",
+  "bugs": {
+    "url": "https://github.com/probe-dock/raml2boot/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/probe-dock/raml2boot"
+    "url": "git@github.com:probe-dock/raml2boot.git"
   },
   "dependencies": {
     "autoprefixer-core": "^5.1.11",
     "bluebird": "^2.9.25",
     "commander": "^2.8.1",
+    "fs-extra": "^0.18.2",
     "highlight.js": "^8.5.0",
-    "inflect-js": "^1.0.0",
     "jade": "^1.9.2",
     "marked": "^0.3.3",
     "raml2obj": "^2.0.0",
