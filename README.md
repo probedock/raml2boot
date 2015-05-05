@@ -5,6 +5,14 @@
 [![NPM version](https://badge.fury.io/js/raml2boot.svg)](http://badge.fury.io/js/raml2boot)
 [![License](https://img.shields.io/npm/l/raml2boot.svg)](http://opensource.org/licenses/MIT)
 
+## Installation
+
+```bash
+npm install -g raml2boot
+```
+
+## Usage
+
 ```bash
 raml2boot api.raml
 cat api.html
