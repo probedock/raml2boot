@@ -1,14 +1,14 @@
 mixin requiredConstraint(property)
   if property.required
-    .badge.badge-required required
+    .badge.badge-required Required
 
 mixin repeatConstraint(property)
   if property.repeat
-    .badge.badge-repeat repeat
+    .badge.badge-repeat Repeatable
 
 mixin defaultConstraint(property)
   if property.default != undefined
-    .badge.badge-default default:
+    .badge.badge-default Default:
       code= property.default
 
 mixin minMaxConstraint(property)
@@ -25,20 +25,20 @@ mixin minMaxConstraint(property)
 mixin minMaxLengthConstraint(property)
   if property.minLength !== undefined || property.maxLength !== undefined
     if property.minLength === property.maxLength
-      .badge.badge-required length == #{minLength}
+      .badge.badge-required Length == #{minLength}
     else if property.minLength !== undefined && property.maxLength !== undefined
       .badge.badge-constraint #{property.minLength} <= length <= #{property.maxLength}
     else if property.minLength !== undefined
-      .badge.badge-constraint length >= #{property.minLength}
+      .badge.badge-constraint Length >= #{property.minLength}
     else
-      .badge.badge-constraint length <= #{property.maxLength}
+      .badge.badge-constraint Length <= #{property.maxLength}
 
 mixin enumConstraint(property)
   if property.enum
     if property.enum.length === 1
       .badge.badge-constraint == #{property.enum[0]}
     else
-      .badge.badge-constraint one of:
+      .badge.badge-constraint One of:
         each value, i in property.enum
           code= value
 
@@ -73,10 +73,10 @@ mixin namedParameters(namedParameters)
         .flex-table-cell.s2= param.displayName
 
         .flex-table-cell.center
-          if param.type
-            = param.type
+          if param.enum
+            | enum[#{param.type ? param.type : '?'}]
           else
-            | unknown
+            | #{param.type ? param.type : 'unknown'}
 
         .flex-table-cell.s2.constraints
           +constraints(param)

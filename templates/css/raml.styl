@@ -62,6 +62,14 @@ pre
   border-color darken(#e2b24c, 50%)
   background-color #e2b24c
 
+.badge-rw
+  border-color darken(#8757b9, 50%)
+  background-color #8757b9
+
+.badge-unique
+  border-color darken(#a3b970, 50%)
+  background-color #a3b970
+
 res(i, max)
   if i < max
     & > .resource
@@ -87,30 +95,6 @@ res(i, max)
 
   p
     margin 0
-
-  table
-    margin-bottom 0
-
-    td
-      background-color transparent !important
-
-      .constraints
-        flex-direction column
-        display flex
-
-        .constraint
-          margin 3px
-          flex 1
-
-    pre
-      background-color transparent
-      line-height 24px
-      margin-bottom 0
-      border none
-      padding 0
-
-    .center
-      text-align center
 
   .method-title
     align-items baseline
@@ -289,28 +273,30 @@ res(i, max)
       padding 10px
       flex 1
 
+      .badge
+        align-self flex-start
+        font-weight normal
+
       &.constraints
         justify-content flex-start
         flex-flow row wrap
         padding 7px 10px
         display flex
 
-      .badge
-        align-self flex-start
-        margin 3px 5px 3px 0
-        font-weight normal
-        border-width 2px
-        border-radius 0
-        font-size 14px
-        padding 7px
-
-        code
+        .badge
+          margin 3px 5px 3px 0
+          border-width 2px
           border-radius 0
-          margin-left 5px
-          padding 0 2px
+          font-size 14px
+          padding 7px
 
-          &.pattern
-            white-space nowrap
+          code
+            border-radius 0
+            margin-left 5px
+            padding 0 2px
+
+            &.pattern
+              white-space nowrap
 
       ul
         margin 0
