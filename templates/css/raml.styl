@@ -47,10 +47,20 @@ pre
     cursor pointer
 
 .badge-required
+  border-color darken(#b93634, 50%)
   background-color #b93634
 
-.badge-repeat
+.badge-constraint
+  border-color darken(#4a70e2, 50%)
   background-color #4a70e2
+
+.badge-repeat
+  border-color darken(#4bc656, 50%)
+  background-color #4bc656
+
+.badge-default
+  border-color darken(#e2b24c, 50%)
+  background-color #e2b24c
 
 res(i, max)
   if i < max
@@ -279,8 +289,28 @@ res(i, max)
       padding 10px
       flex 1
 
+      &.constraints
+        justify-content flex-start
+        flex-flow row wrap
+        padding 7px 10px
+        display flex
+
       .badge
         align-self flex-start
+        margin 3px 5px 3px 0
+        font-weight normal
+        border-width 2px
+        border-radius 0
+        font-size 14px
+        padding 7px
+
+        code
+          border-radius 0
+          margin-left 5px
+          padding 0 2px
+
+          &.pattern
+            white-space nowrap
 
       ul
         margin 0

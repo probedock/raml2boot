@@ -1,39 +1,76 @@
-mixin minConstraint(minimum, maximum)
-  if minimum !== undefined || maximum !== undefined
-    if minimum === maximum
-      .badge.badge-required <val> = #{minimum}
-    else if minimum !== undefined && maximum !== undefined
-      .badge.badge-required #{minimum} <= <val> <= #{maximum}
-    else if minimum !== undefined
-      .badge.badge-required val >= #{minimum}
+mixin requiredConstraint(property)
+  if property.required
+    .badge.badge-required required
+
+mixin repeatConstraint(property)
+  if property.repeat
+    .badge.badge-repeat repeat
+
+mixin defaultConstraint(property)
+  if property.default != undefined
+    .badge.badge-default default:
+      code= property.default
+
+mixin minMaxConstraint(property)
+  if property.minimum !== undefined || property.maximum !== undefined
+    if property.minimum === property.maximum
+      .badge.badge-required == #{minimum}
+    else if property.minimum !== undefined && property.maximum !== undefined
+      .badge.badge-constraint #{property.minimum} <= value <= #{property.maximum}
+    else if property.minimum !== undefined
+      .badge.badge-constraint >= #{property.minimum}
     else
-      .badge.badge-required <val> <= #{maximum}
+      .badge.badge-constraint <= #{property.maximum}
 
-mixin constraints(item)
-  .constraints
-    .constraint
-      if item.required || item.repeat || item.default != undefined
-        if item.required
-          .badge.badge-required required
-        if item.repeat
-          .badge.badge-repeat repeat
-        if item.default != undefined
-          .badge.badge-repeat default: #{item.default}
+mixin minMaxLengthConstraint(property)
+  if property.minLength !== undefined || property.maxLength !== undefined
+    if property.minLength === property.maxLength
+      .badge.badge-required length == #{minLength}
+    else if property.minLength !== undefined && property.maxLength !== undefined
+      .badge.badge-constraint #{property.minLength} <= length <= #{property.maxLength}
+    else if property.minLength !== undefined
+      .badge.badge-constraint length >= #{property.minLength}
+    else
+      .badge.badge-constraint length <= #{property.maxLength}
 
-      if item.minimum || item.maximum
-        +minConstraint(item.minimum, item.maximum)
+mixin enumConstraint(property)
+  if property.enum
+    if property.enum.length === 1
+      .badge.badge-constraint == #{property.enum[0]}
+    else
+      .badge.badge-constraint one of:
+        each value, i in property.enum
+          code= value
+
+mixin patternConstraint(property)
+  if property.pattern
+    .badge.badge-constraint
+      code.pattern /#{property.pattern}/
+
+mixin constraints(property)
+  +requiredConstraint(property)
+  +repeatConstraint(property)
+  +defaultConstraint(property)
+
+  if (property.type == 'integer' || property.type == 'number')
+    +minMaxConstraint(property)
+
+  if (property.type == 'string')
+    +patternConstraint(property)
+    +minMaxLengthConstraint(property)
+    +enumConstraint(property)
 
 mixin namedParameters(namedParameters)
   .flex-table
     .flex-table-headers.no-left-border
-      .flex-table-header Name
+      .flex-table-header.s2 Name
       .flex-table-header.center Type
-      .flex-table-header.s3 Constraints
-      .flex-table-header.s3 Description
-      .flex-table-header.s3 Example
+      .flex-table-header.s2 Constraints
+      .flex-table-header.s4 Description
+      .flex-table-header.s4 Example
     each param in namedParameters
       .flex-table-row.no-left-border
-        .flex-table-cell= param.displayName
+        .flex-table-cell.s2= param.displayName
 
         .flex-table-cell.center
           if param.type
@@ -41,11 +78,11 @@ mixin namedParameters(namedParameters)
           else
             | unknown
 
-        .flex-table-cell.s3
+        .flex-table-cell.s2.constraints
           +constraints(param)
 
-        .flex-table-cell.s3!= helpers.marked(param.description)
-        .flex-table-cell.s3!= helpers.marked(param.example)
+        .flex-table-cell.s4!= helpers.marked(param.description)
+        .flex-table-cell.s4!= helpers.marked(param.example)
 
 mixin namedParametersSection(uid, verb, sectionType, title, namedParameters)
   .method-section
@@ -128,19 +165,12 @@ mixin resource(resource, level)
 
                   if method.queryParameters
                     +namedParametersSection(resource.uniqueId, method.method, 'req-query-params', 'Query Parameters', method.queryParameters)
-                    //ul
-                    //  each param, key in method.queryParameters
-                    //        em
-                    //          if param.enum
-                    //            |  one of (#{param.enum})
-                    //          else
-                    //            |  (#{param.type})
-                    //          if param.default
-                    //            |  &mdash; Default: <code>#{param.default}</code>
-                    //
 
                   if method.headers
                     +namedParametersSection(resource.uniqueId, method.method, 'req-headers', 'Headers', method.headers)
+
+                  if method.formParameters
+                    +namedParametersSection(resource.uniqueId, method.method, 'req-form-params', 'Form parameters', method.formParameters)
 
                   if method.body
                     .method-section
@@ -151,29 +181,6 @@ mixin resource(resource, level)
                           +jsonSchema(b.schema, resource.uniqueId + '-' + method.method + '-request')
                         if b.example
                           +example(b.example, resource.uniqueId + '-' + method.method + '-reques-body-example')
-
-                        //if formParameters
-                        //  strong Form Parameters
-                        //  ul
-                        //    each param in formParameters
-                        //      li.markdown
-                        //        strong=key
-                        //        em
-                        //          if param.required
-                        //            |  required
-                        //          if param.enum
-                        //            |  one of (#{param.enum})
-                        //          else
-                        //            |  (#{param.type})
-                        //        | !{description}
-                        //        if param.example
-                        //          p: small
-                        //            strong Example:
-                        //            code!=param.example
-                        //        if param.schema
-                        //          p:small
-                        //            strong Schema:
-                        //            code!=param.schema
 
               if method.responses
                 .method-section
