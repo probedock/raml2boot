@@ -1,142 +1,91 @@
-- var space = ' ';
-
-mixin readWrite(property)
+mixin readWriteJsonConstraint(property)
   if property.readOnly
-    li
-      em read-only
-      | !{space}
+    .badge.badge-rw ReadOnly
   if property.writeOnly
-    li
-      em write-only
-      | !{space}
+    .badge.badge.rw WriteOnly
 
-mixin unique(property)
+mixin uniqueJsonConstraint(property)
   if property.unique
-    li
-      strong
-        em unique
-      | !{space}
+    .badge.badge-unique Unique
 
-mixin pattern(property)
+mixin patternJsonConstraint(property)
   if property.pattern
-    li
-      code(style="white-space: nowrap;")
-        | /
-        = property.pattern
-        | /
+    .badge.badge-constraint
+      code.pattern /#{property.pattern}/
 
-mixin format(property)
+mixin formatJsonConstraint(property)
   if property.format == 'date-time'
-    li
+    .badge.badge-constraint
       a(href='http://en.wikipedia.org/wiki/ISO_8601') ISO-8601 date
   else if property.format == 'uri'
-    li
-      | must be a valid URL
+    .badge.badge-constraint URI
 
-mixin minMax(property)
+mixin minMaxJsonConstraint(property)
   if property.minimum || property.maximum
-    li
-      if property.minimum !== undefined || property.maximum !== undefined
-        if property.minimum === property.maximum
-          | must be
-          = property.minimum
-        else if property.minimum !== undefined && property.maximum !== undefined
-          | between
-          = property.minimum
-          if property.exclusiveMinimum
-            |  (exclusive)
-          else
-            |  (inclusive)
-          |  and
-          = property.maximum
-          if property.exclusiveMaximum
-            |  (exclusive)
-          else
-            |  (inclusive)
-        else if property.minimum !== undefined
-          | must be
-          if property.exclusiveMinimum
-            | greater than
-          else
-            | greater than or equal to
-          = property.minimum
-        else
-          | must be
-          if property.exclusiveMaximum
-            | smaller than
-          else
-            | smaller than or equal to
-          = property.maximum
+    if property.minimum !== undefined || property.maximum !== undefined
+      - var exclusiveMinimum = property.exclusiveMinimum ? '<' : '<=';
+      - var exclusiveMaximum = property.exclusiveMaximum ? '<' : '<=';
 
-mixin minMaxItems(property)
+      if property.minimum === property.maximum
+        .badge.badge-constraint == #{property.minimum}
+
+      else if property.minimum !== undefined && property.maximum !== undefined
+        .badge.badge-constraint #{property.minimum} #{exclusiveMinimum} value #{exclusiveMaximum} #{property.maximum}
+
+      else if property.minimum !== undefined
+        .badge.badge-constraint #{exclusiveMinimum.replace('<', '>')} #{property.minimum}
+
+      else
+        .badge.badge-constraint #{exclusiveMaximum} #{property.maximum}
+
+mixin minMaxItemsJsonConstraint(property)
   if property.minItems || property.maxItems
-    li
-      if property.minItems && property.maxItems
-        if property.minItems === 1
-          | exactly 1 item
-        else
-          | exactly
-          = property.minItems
-          |  items
+    if property.minItems && property.maxItems
+      if property.minItems === 1
+        .badge.badge-constraint Exactly #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
+
       else if property.minItems
-        if property.minItems === 1
-          | at least 1 item
-        else
-          | at least
-          = property.minItems
-          |  items
+        .badge.badge-constraint At least #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
+
       else if property.maxItems
-        if property.maxItems === 1
-          | at most 1 item
-        else
-          | at most
-          = property.maxItems
-          |  items
+        .badge.badge-constraint At most #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
 
-mixin minMaxLength(property)
+mixin minMaxLengthJsonConstraint(property)
   if property.minLength && property.maxLength
-    li
-      if property.minLength === property.maxLength
-        = property.minLength
-        if property.minLength === 1
-          |  char
-        else
-          |  chars
-      else
-        = property.minLength
-        | -
-        = property.maxLength
-        |  chars
+    if property.minLength === property.maxLength
+      .badge.badge-constraint #{property.minLength} #{'char' + property.minLength > 1 ? 's' : ''}
 
-mixin enum(property)
+    else if property.minLength && property.maxLength
+      .badge.badge-constraint #{property.minLength} <= length <= #{property.maxLength}
+
+    else if property.minLength
+      .badge.badge-constraint At least #{property.minLength} #{'char' + property.minLength > 1 ? 's' : ''}
+
+    else
+      .badge.badge-constraint At most #{property.maxLength} #{'char' + property.maxLength > 1 ? 's' : ''}
+
+
+mixin enumJsonConstraint(property)
   if property.enum
-    li
-      if property.enum.length === 1
-        | must be
-        code= property.enum[0]
-      else
-        | one of
+    if property.enum.length === 1
+      .badge.badge-constraint == #{property.enum[0]}
+    else
+      .badge.badge-constraint One of:
         each value, i in property.enum
-          if i != 0
-            | ,
-          else
-            | !{space}
           code= value
 
-
-mixin constraints(property, name, required)
+mixin jsonSchemaConstraints(property, name, required)
   if required && required.indexOf(name) > -1
-    .badge.badge-required required
+    .badge.badge-required Required
 
-  ul
-    +readWrite(property)
-    +unique(property)
-    +pattern(property)
-    +format(property)
-    +minMax(property)
-    +minMaxLength(property)
-    +enum(property)
-    +minMaxItems(property)
+  +readWriteJsonConstraint(property)
+  +uniqueJsonConstraint(property)
+  +patternJsonConstraint(property)
+  +formatJsonConstraint(property)
+  +minMaxJsonConstraint(property)
+  +minMaxLengthJsonConstraint(property)
+  +enumJsonConstraint(property)
+  +minMaxItemsJsonConstraint(property)
 
 mixin propertyRowLeveled(property, level)
   if property.type == 'object'
@@ -147,18 +96,18 @@ mixin propertyRowLeveled(property, level)
 mixin propertyRowContent(name, property, required, level)
   .flex-table-row(class='level-#{level}')
     if name
-      .flex-table-cell.property= name
+      .flex-table-cell.s2.property= name
     else
-      .flex-table-cell.property
-        .badge.badge-repeat
-          if property.type == 'array'
-            | collection
-          else
-            | item
-    .flex-table-cell.center= property.type
-    .flex-table-cell.s2
-      +constraints(property, name, required)
-    .flex-table-cell.s2!= helpers.marked(property.description)
+      .flex-table-cell.s2.property
+        .badge #{property.type == 'array' ? 'collection' : 'item'}
+    .flex-table-cell.center
+      if property.enum
+        | enum[#{property.type ? property.type : '?'}]
+      else
+        = property.type
+    .flex-table-cell.s2.constraints
+      +jsonSchemaConstraints(property, name, required)
+    .flex-table-cell.s4!= helpers.marked(property.description)
 
 mixin propertyRow(name, property, required, level)
   if helpers.isSchemaIndentBordered
@@ -196,10 +145,10 @@ mixin jsonSchemaTable(schema)
               div!= helpers.marked(schema.description)
 
         .flex-table-headers
-          .flex-table-header Property
+          .flex-table-header.s2 Property
           .flex-table-header.center Type
-          .flex-table-header.s2 Constraints
-          .flex-table-header.s2 Description
+          .flex-table-header.s2.center JSON Schema Constraints
+          .flex-table-header.s4 Description
 
         if schema.title || schema.description
 

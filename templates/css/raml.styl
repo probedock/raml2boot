@@ -47,16 +47,34 @@ pre
     cursor pointer
 
 .badge-required
+  border-color darken(#b93634, 50%)
   background-color #b93634
 
-.badge-repeat
+.badge-constraint
+  border-color darken(#4a70e2, 50%)
   background-color #4a70e2
+
+.badge-repeat
+  border-color darken(#4bc656, 50%)
+  background-color #4bc656
+
+.badge-default
+  border-color darken(#e2b24c, 50%)
+  background-color #e2b24c
+
+.badge-rw
+  border-color darken(#8757b9, 50%)
+  background-color #8757b9
+
+.badge-unique
+  border-color darken(#a3b970, 50%)
+  background-color #a3b970
 
 res(i, max)
   if i < max
     & > .resource
       background lighten(#EEE, i * 35%)
-      border-left-color lighten(#EEE, i * 35%)
+      /*border-left-color lighten(#EEE, i * 35%)*/
 
       .resource-title
         background-color lighten(#EEE, i * 35%)
@@ -66,6 +84,8 @@ res(i, max)
 
       res(i + 1, max)
 
+.collapse-method
+  margin-bottom 15px
 
 .method
   border-left 10px solid darken(#EEE, 20%)
@@ -75,30 +95,6 @@ res(i, max)
 
   p
     margin 0
-
-  table
-    margin-bottom 0
-
-    td
-      background-color transparent !important
-
-      .constraints
-        display flex
-        flex-direction column
-
-        .constraint
-          margin 3px
-          flex 1
-
-    pre
-      background-color transparent
-      line-height 24px
-      margin-bottom 0
-      border none
-      padding 0
-
-    .center
-      text-align center
 
   .method-title
     align-items baseline
@@ -122,6 +118,20 @@ res(i, max)
   .description
     padding 15px 0
     margin 0
+
+    p
+      margin-top 10px
+      font-size 1.1em
+
+    p:first-of-type
+      margin-top 0
+
+    ul
+      li
+        margin-top 5px
+
+      li:first-of-type
+        margin-top 10px
 
   .method-body
     .method-section
@@ -156,6 +166,7 @@ res(i, max)
     padding 0
 
 .resource
+  border-left 1px solid darken(#EEE, 20%)
   border-top 1px solid darken(#EEE, 20%)
   flex-direction column
   padding-left 10px
@@ -181,6 +192,11 @@ res(i, max)
     .resource-title-uri, .resource-title-badges
       flex 1
 
+    .resource-title-badges
+      span
+        i
+          margin-left 5px
+
     .resource-title-description
       font-weight normal
       font-size .8em
@@ -199,6 +215,12 @@ res(i, max)
       color #f3f3f6
       padding 5px
       float right
+      width 105px
+
+.resource-level-1
+  border-left-width 3px
+  border-top-width 3px
+  margin-top 15px
 
 .flex-table
   flex-direction column
@@ -253,6 +275,28 @@ res(i, max)
 
       .badge
         align-self flex-start
+        font-weight normal
+
+      &.constraints
+        justify-content flex-start
+        flex-flow row wrap
+        padding 7px 10px
+        display flex
+
+        .badge
+          margin 3px 5px 3px 0
+          border-width 2px
+          border-radius 0
+          font-size 14px
+          padding 7px
+
+          code
+            border-radius 0
+            margin-left 5px
+            padding 0 2px
+
+            &.pattern
+              white-space nowrap
 
       ul
         margin 0
