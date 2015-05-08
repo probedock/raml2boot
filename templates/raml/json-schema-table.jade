@@ -132,8 +132,7 @@ mixin propertyOneOfRow(property, level)
         .badge oneOf
       .flex-table-cell.center object
       .flex-table-cell.s2.constraints
-        .badge.badge-required Required
-        .badge.badge-required Must be one of the following objects
+        .badge.badge-required One is required in the following objects
       .flex-table-cell.s4!= helpers.marked(property.description)
 
     each oneOfProperty, i in property.oneOf
