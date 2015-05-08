@@ -130,7 +130,8 @@ mixin propertyOneOfRow(property, level)
     .flex-table-row(class='level-#{level}')
       .flex-table-cell.s2.property
         .badge oneOf
-      .flex-table-cell.center object
+      .flex-table-cell.center
+        .badge object
       .flex-table-cell.s2.constraints
         .badge.badge-required One is required in the following objects
       .flex-table-cell.s4!= helpers.marked(property.description)
