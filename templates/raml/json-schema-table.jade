@@ -90,7 +90,7 @@ mixin jsonSchemaConstraints(property, name, required)
 mixin propertyRowLeveled(property, level)
   if property.type == 'object'
     +properties(property, level + 1)
-  else if property.type == 'array'
+  else if property.type == 'array' && property.items
     +propertyRow(null, property.items, [], level + 1)
 
 mixin propertyRowContent(name, property, required, level)
