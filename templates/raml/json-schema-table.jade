@@ -68,7 +68,7 @@ mixin minMaxLengthJsonConstraint(property)
 mixin enumJsonConstraint(property)
   if property.enum
     if property.enum.length === 1
-      .badge.badge-constraint == #{property.enum[0]}
+      .badge.badge-required Must be: #{property.enum[0]}
     else
       .badge.badge-constraint One of:
         each value, i in property.enum
@@ -88,7 +88,7 @@ mixin jsonSchemaConstraints(property, name, required)
   +minMaxItemsJsonConstraint(property)
 
 mixin propertyRowLeveled(property, level)
-  if property.type == 'object'
+  if property.type == 'object' || property.properties
     +properties(property, level + 1)
   else if property.type == 'array' && property.items
     +propertyRow(null, property.items, [], level + 1)
@@ -96,7 +96,11 @@ mixin propertyRowLeveled(property, level)
 mixin propertyRowContent(name, property, required, level)
   .flex-table-row(class='level-#{level}')
     if name
-      .flex-table-cell.s2.property= name
+      if property.type
+        .flex-table-cell.s2.property= name
+      else
+        .flex-table-cell.s2.property
+          .badge= name
     else
       .flex-table-cell.s2.property
         .badge #{property.type == 'array' ? 'collection' : 'item'}
@@ -121,9 +125,32 @@ mixin propertyRow(name, property, required, level)
     +propertyRowContent(name, property, required, level)
     +propertyRowLeveled(property, level)
 
+mixin propertyOneOfRow(property, level)
+  .flex-table(class='level-#{level}')
+    .flex-table-row(class='level-#{level}')
+      .flex-table-cell.s2.property
+        .badge oneOf
+      .flex-table-cell.center
+        .badge object
+      .flex-table-cell.s2.constraints
+        .badge.badge-required One is required in the following objects
+      .flex-table-cell.s4!= helpers.marked(property.description)
+
+    each oneOfProperty, i in property.oneOf
+      if i > 0
+        .flex-table(class='level-#{level + 2}')
+          .flex-table-row(class='level-#{level + 2}')
+            .flex-table-cell.center
+              span.or Or
+
+      +propertyRow('object', oneOfProperty, [], level + 1)
+
 mixin properties(schema, level)
   if schema.type == 'array'
     +propertyRow(null, schema, schema.required, level)
+
+  else if schema.oneOf
+    +propertyOneOfRow(schema, level)
 
   else
     if schema.properties
@@ -136,12 +163,12 @@ mixin properties(schema, level)
 
 mixin jsonSchemaTable(schema)
   .jsonSchemaLevel
-    if schema.properties || schema.patternProperties || schema.items
+    if schema.properties || schema.patternProperties || schema.items || schema.oneOf
       .flex-table
         .flex-table-row.no-left-border
           .flex-table-cell.center
             h2= schema.title
-            if schema.description
+            if schema.description && !schema.oneOf
               div!= helpers.marked(schema.description)
 
         .flex-table-headers
@@ -149,7 +176,5 @@ mixin jsonSchemaTable(schema)
           .flex-table-header.center Type
           .flex-table-header.s2.center JSON Schema Constraints
           .flex-table-header.s4 Description
-
-        if schema.title || schema.description
 
         +properties(schema, 0)
