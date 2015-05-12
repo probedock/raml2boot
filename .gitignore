@@ -1,5 +1,5 @@
 /.grunt
 /examples/*.html
 /node_modules
+/npm-debug.log
 /tmp
-npm-debug.log
