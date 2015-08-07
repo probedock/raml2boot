@@ -1,8 +1,8 @@
 mixin readWriteJsonConstraint(property)
   if property.readOnly
-    .badge.badge-rw ReadOnly
+    .badge.badge-rw Read-only
   if property.writeOnly
-    .badge.badge.rw WriteOnly
+    .badge.badge.rw Write-only
 
 mixin uniqueJsonConstraint(property)
   if property.unique
