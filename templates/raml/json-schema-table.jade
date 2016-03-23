@@ -21,48 +21,49 @@ mixin formatJsonConstraint(property)
     .badge.badge-constraint URI
 
 mixin minMaxJsonConstraint(property)
-  if property.minimum || property.maximum
-    if property.minimum !== undefined || property.maximum !== undefined
-      - var exclusiveMinimum = property.exclusiveMinimum ? '<' : '<=';
-      - var exclusiveMaximum = property.exclusiveMaximum ? '<' : '<=';
+  if property.minimum !== undefined || property.maximum !== undefined
+    - var exclusiveMinimum = property.exclusiveMinimum ? '<' : '<=';
+    - var exclusiveMaximum = property.exclusiveMaximum ? '<' : '<=';
 
-      if property.minimum === property.maximum
-        .badge.badge-constraint == #{property.minimum}
+    if property.minimum === property.maximum
+      .badge.badge-constraint == #{property.minimum}
 
-      else if property.minimum !== undefined && property.maximum !== undefined
-        .badge.badge-constraint #{property.minimum} #{exclusiveMinimum} value #{exclusiveMaximum} #{property.maximum}
+    else if property.minimum !== undefined && property.maximum !== undefined
+      .badge.badge-constraint #{property.minimum} #{exclusiveMinimum} value #{exclusiveMaximum} #{property.maximum}
 
-      else if property.minimum !== undefined
-        .badge.badge-constraint #{exclusiveMinimum.replace('<', '>')} #{property.minimum}
+    else if property.minimum !== undefined
+      .badge.badge-constraint #{exclusiveMinimum.replace('<', '>')} #{property.minimum}
 
-      else
-        .badge.badge-constraint #{exclusiveMaximum} #{property.maximum}
+    else
+      .badge.badge-constraint #{exclusiveMaximum} #{property.maximum}
 
 mixin minMaxItemsJsonConstraint(property)
   if property.minItems || property.maxItems
-    if property.minItems && property.maxItems
-      if property.minItems === 1
-        .badge.badge-constraint Exactly #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
+    if property.minItems === 1 && property.maxItems === 1
+      .badge.badge-constraint Exactly #{property.minItems} #{'item' + (property.minItems > 1 ? 's' : '')}
 
-      else if property.minItems
-        .badge.badge-constraint At least #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
+    else if property.minItems && property.maxItems
+      .badge.badge-constraint Between #{property.minItems} and #{property.maxItems} #{'item' + (property.maxItems > 1 ? 's' : '')}
 
-      else if property.maxItems
-        .badge.badge-constraint At most #{property.minItems} #{'item' + property.minItems > 1 ? 's' : ''}
+    else if property.minItems
+      .badge.badge-constraint At least #{property.minItems} #{'item' + (property.minItems > 1 ? 's' : '')}
+
+    else if property.maxItems
+      .badge.badge-constraint At most #{property.minItems} #{'item' + (property.maxItems > 1 ? 's' : '')}
 
 mixin minMaxLengthJsonConstraint(property)
-  if property.minLength && property.maxLength
+  if property.minLength !== undefined || property.maxLength !== undefined
     if property.minLength === property.maxLength
-      .badge.badge-constraint #{property.minLength} #{'char' + property.minLength > 1 ? 's' : ''}
+      .badge.badge-constraint #{property.minLength} #{'char' + (property.minLength > 1 ? 's' : '')}
 
-    else if property.minLength && property.maxLength
-      .badge.badge-constraint #{property.minLength} <= length <= #{property.maxLength}
+    else if property.minLength !== undefined && property.maxLength !== undefined
+      .badge.badge-constraint Between #{property.minLength} and #{property.maxLength} #{'char' + (property.maxLength > 1 ? 's' : '')}
 
-    else if property.minLength
-      .badge.badge-constraint At least #{property.minLength} #{'char' + property.minLength > 1 ? 's' : ''}
+    else if property.minLength !== undefined
+      .badge.badge-constraint At least #{property.minLength} #{'char' + (property.minLength > 1 ? 's' : '')}
 
     else
-      .badge.badge-constraint At most #{property.maxLength} #{'char' + property.maxLength > 1 ? 's' : ''}
+      .badge.badge-constraint At most #{property.maxLength} #{'char' + (property.maxLength > 1 ? 's' : '')}
 
 
 mixin enumJsonConstraint(property)
