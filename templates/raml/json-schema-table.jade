@@ -72,8 +72,10 @@ mixin enumJsonConstraint(property)
       .badge.badge-required Must be: #{property.enum[0]}
     else
       .badge.badge-constraint One of:
+        = ' '
         each value, i in property.enum
           code= value
+          = ' '
 
 mixin jsonSchemaConstraints(property, name, required)
   if required && required.indexOf(name) > -1
