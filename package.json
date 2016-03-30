@@ -1,6 +1,6 @@
 {
   "name": "raml2boot",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "RAML to Bootstrap documentation generator.",
   "main": "./lib/index.js",
   "author": "Simon Oulevay <npm@alphahydrae.com>",
